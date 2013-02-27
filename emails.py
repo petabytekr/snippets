@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 
 from google.appengine.api import mail
@@ -9,9 +10,14 @@ from dateutil import *
 from model import *
 
 REMINDER = """
-Hey nerd,
+한 주간 수고하셨습니다.
+회신으로 업무내역을 입력해주세요. :)
 
-The kids want to know what you're up to. Don't leave 'em hanging.
+지난주 한 일
+- 
+
+이번주 할 일
+- 
 """
 
 class ReminderEmail(webapp.RequestHandler):
@@ -24,9 +30,9 @@ class ReminderEmail(webapp.RequestHandler):
 
 class OneReminderEmail(webapp.RequestHandler):
     def post(self):
-        mail.send_mail(sender="snippets <snippets@fssnippets.appspotmail.com>",
+        mail.send_mail(sender="snippets <snippets@minisnippets.appspotmail.com>", # FIX ME
                        to=self.request.get('email'),
-                       subject="Snippet time!",
+                       subject="Snippet 타임!",
                        body=REMINDER)
 
     def get(self):
@@ -41,9 +47,9 @@ class DigestEmail(webapp.RequestHandler):
 
 class OneDigestEmail(webapp.RequestHandler):
     def __send_mail(self, recipient, body):
-        mail.send_mail(sender="snippets <snippets@fssnippets.appspotmail.com>",
+        mail.send_mail(sender="snippets <snippets@minisnippets.appspotmail.com>", # FIX ME
                        to=recipient,
-                       subject="Snippet delivery!",
+                       subject="Snippet Digest 메일이 도착하였습니다!",
                        body=body)
 
     def __snippet_to_text(self, snippet):
@@ -62,6 +68,6 @@ class OneDigestEmail(webapp.RequestHandler):
         logging.info(all_snippets)
         body = '\n\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
         if body:
-            self.__send_mail(user.email, 'https://fssnippets.appspot.com\n\n' + body)
+            self.__send_mail(user.email, 'https://minisnippets.appspot.com\n\n' + body) # FIX ME
         else:
             logging.info(user.email + ' not following anybody.')
