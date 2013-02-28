@@ -42,7 +42,8 @@ def authenticated(method):
 class BaseHandler(webapp.RequestHandler):
     def get_user(self):
         '''Returns the user object on authenticated requests'''
-        user = users.get_current_user()
+        curuser = users.get_current_user()
+        user = users.User(curuser.email().lower())
         assert user
 
         userObj = User.all().filter("email =", user.email()).fetch(1)
