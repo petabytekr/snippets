@@ -21,11 +21,11 @@ class ReceiveEmail(InboundMailHandler):
                 body.encoding = '7bit'
             content = body.decode()
 
-            sig_pattern = re.compile(r'^\-\-\s*$', re.MULTILINE)
+            sig_pattern = re.compile(r'^(\-\-|\=\=)\s*$', re.MULTILINE)
             split_email = re.split(sig_pattern, content)
             content = split_email[0]
 
-            reply_pattern = re.compile(r'^On.*at.*snippets', re.MULTILINE)
+            reply_pattern = re.compile(r'^(On.*at|2\d{3}).*snippets', re.MULTILINE)
             split_email = re.split(reply_pattern, content)
             content = split_email[0]
 
