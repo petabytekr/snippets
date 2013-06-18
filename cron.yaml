@@ -1,20 +1,20 @@
 cron:
 - description: weekly reminder
   url: /reminderemail
-  schedule: every friday 17:00 # FIX ME
+  schedule: every friday 17:00 # 주말 알림
   timezone: Asia/Seoul
 
 - description: weekly digest
   url: /digestemail
-  schedule: every monday 8:00 # FIX ME
+  schedule: every monday 8:00 # 주초 보고
   timezone: Asia/Seoul
 
 - description: midweek reminder
   url: /reminderemail
-  schedule: every wednesday 17:00 # FIX ME
+  schedule: every wednesday 17:00 # 주중 알림
   timezone: Asia/Seoul
 
 - description: midweek digest
   url: /digestemail
-  schedule: every thursday 8:00 # FIX ME
+  schedule: every thursday 8:00 # 주중 보고
   timezone: Asia/Seoul
