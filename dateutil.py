@@ -60,17 +60,16 @@ def date_for_new_snippet():
 
 
 def date_for_retrieval():
-    """Always return the most recent Monday."""
     today = datetime.datetime.now(Seoul_tzinfo()).date()
 
     # return today - datetime.timedelta(days=today.weekday())
 
     if (today.weekday() < 1): # 월 경우
-        aligned = today - datetime.timedelta(days=today.weekday()) # 당일 월요일로 맞춤
+        aligned = today - datetime.timedelta(days=today.weekday()) # 금주 월요일로 맞춤
     elif (today.weekday() < 4): # 목 경우
-        aligned = today - datetime.timedelta(days=(3-today.weekday())) # 당일 목요일로 맞춤
-    else:
-        aligned = today - datetime.timedelta(days=today.weekday()) # 월요일로 맞춤
+        aligned = today - datetime.timedelta(days=(3-today.weekday())) # 금주 목요일로 맞춤
+    else: # 금, 토, 일 경우
+        aligned = today + datetime.timedelta(days=(3-today.weekday())) # 금주 목요일로 맞춤
 
     return aligned
 
