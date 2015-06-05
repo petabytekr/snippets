@@ -37,24 +37,10 @@ class Seoul_tzinfo(datetime.tzinfo):
         return "KST"
         
 def date_for_new_snippet():
-    """Return next Monday, unless it is Monday (0) or Tuesday (1)"""
     today = datetime.datetime.now(Seoul_tzinfo()).date()
     
-    """
-    if (today.weekday() < 2):
-        aligned = today - datetime.timedelta(days=today.weekday())
-    else:
-        aligned = today + datetime.timedelta(days=(7 - today.weekday()))
-    """
-
-    if (today.weekday() < 1): # 월 경우
-        aligned = today - datetime.timedelta(days=today.weekday()) # 당일 월요일로 맞춤
-    elif (today.weekday() < 3): # 월,화,수 경우
-        aligned = today + datetime.timedelta(days=(3-today.weekday())) # 다음 목요일로 맞춤
-    elif (today.weekday() < 4): # 목 경우
-        aligned = today - datetime.timedelta(days=(3-today.weekday())) # 당일 목요일로 맞춤
-    else: # 금, 토, 일 경우
-        aligned = today + datetime.timedelta(days=(7-today.weekday())) # 다음주 월요일로 맞춤
+    # 다음목요일로 조정, 금,토, 일경우 이전 목요일로 조정됨
+    aligned = today - datetime.timedelta(days=(4-today.weekday())) # 다음 목요일로 맞춤
 
     return aligned
 
@@ -62,15 +48,6 @@ def date_for_new_snippet():
 def date_for_retrieval():
     today = datetime.datetime.now(Seoul_tzinfo()).date()
 
-    # return today - datetime.timedelta(days=today.weekday())
-
-    if (today.weekday() < 1): # 월 경우
-        aligned = today - datetime.timedelta(days=today.weekday()) # 금주 월요일로 맞춤
-    elif (today.weekday() < 4): # 목 경우
-        aligned = today - datetime.timedelta(days=(3-today.weekday())) # 금주 목요일로 맞춤
-    else: # 금, 토, 일 경우
-        aligned = today + datetime.timedelta(days=(3-today.weekday())) # 금주 목요일로 맞춤
-
-    return aligned
+    return today - datetime.timedelta(days=2-today.weekday())
 
 
