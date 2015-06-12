@@ -40,7 +40,7 @@ def date_for_new_snippet():
     today = datetime.datetime.now(Seoul_tzinfo()).date()
     
     # 다음목요일로 조정, 금,토, 일경우 이전 목요일로 조정됨
-    aligned = today - datetime.timedelta(days=(4-today.weekday())) # 다음 목요일로 맞춤
+    aligned = today - datetime.timedelta(days=(today.weekday()-2)) # 다음 목요일로 맞춤
 
     return aligned
 
@@ -48,6 +48,6 @@ def date_for_new_snippet():
 def date_for_retrieval():
     today = datetime.datetime.now(Seoul_tzinfo()).date()
 
-    return today - datetime.timedelta(days=2-today.weekday())
+    return today - datetime.timedelta(days=(today.weekday()-2))
 
 

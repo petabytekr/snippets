@@ -50,7 +50,7 @@ class OneReminderEmail(webapp.RequestHandler):
     def post(self):
         mail.send_mail(sender="snippets <snippets@gcentask.appspotmail.com>", # FIX ME
                        to=self.request.get('email'),
-                       subject=("주간업무 기록시간입니다. " + datetime.datetime.now().strftime('%Y.%m.%d') + " #gcentask"),
+                       subject=("주간업무 기록시간입니다. " + datetime.datetime.now(Seoul_tzinfo()).strftime('%Y.%m.%d') + " #gcentask"),
                        body=REMINDER)
 
     def get(self):
@@ -67,7 +67,7 @@ class OneDigestEmail(webapp.RequestHandler):
     def __send_mail(self, recipient, body):
         mail.send_mail(sender="snippets <snippets@gcentask.appspotmail.com>", # FIX ME
                        to=recipient,
-                       subject=("주간업무 종합 " + datetime.datetime.now().strftime('%Y.%m.%d') + " #gcentask"),
+                       subject=("주간업무 종합 " + datetime.datetime.now(Seoul_tzinfo()).strftime('%Y.%m.%d') + " #gcentask"),
                        body=body)
 
     def __snippet_to_text(self, snippet):
@@ -83,6 +83,7 @@ class OneDigestEmail(webapp.RequestHandler):
         all_snippets = Snippet.all().filter("date =", d).fetch(500)
         all_users = User.all().fetch(500)
         following = compute_following(user, all_users)
+        logging.info(d)
         logging.info(all_snippets)
         body = '\n\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
         if body:

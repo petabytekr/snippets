@@ -131,6 +131,7 @@ class TagHandler(BaseHandler):
         if (tag != 'all'):
             all_snippets = [s for s in all_snippets if tag in s.user.tags]
         following = tag in user.tags_following
+        logging.info(d);
 
         template_values = {
                            'current_user' : user,
